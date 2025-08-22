@@ -3,19 +3,18 @@
 use App\Http\Controllers\ProfileController;
 use GuzzleHttp\Promise\Create;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProductController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-//Create a route for products
-Route::resource('products', App\Http\Controllers\ProductController::class);
+// Resource Auth Route - Must be logged in to create and manage products
 
-// Route for Full Record view
-use App\Http\Controllers\ProductController;
-
-// Add this **above or below** your resource route
-Route::get('products/view/{id}', [ProductController::class, 'view'])->name('products.view');
+Route::middleware(['auth'])->prefix('dashboard')->group(function () {
+    Route::resource('products', ProductController::class);
+    Route::get('products/view/{id}', [ProductController::class, 'view'])->name('products.view');
+});
 
 
 Route::get('/dashboard', function () {

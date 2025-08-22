@@ -142,7 +142,19 @@ public function show(Product $product)
      // Remove the specified resource from storage.
     
     public function destroy(Product $product)
-    {
-        //
+{
+  
+    if ($product->image && file_exists(public_path($product->image))) {
+        unlink(public_path($product->image));
     }
+
+    // Delete the product
+    $product->delete();
+
+    // Redirect back to the products index with a success message
+    return redirect()->route('products.index')
+                     ->with('success', 'Product deleted successfully!');
 }
+
+    }
+
