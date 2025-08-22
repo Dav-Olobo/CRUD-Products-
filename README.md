@@ -1,61 +1,118 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laravel Product CRUD App
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A simple Laravel 10+ CRUD application with authentication, product management, and image upload functionality. This app allows users to register, login, create, read, update, and delete products.
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+1. User authentication (register, login, logout) using Laravel’s built-in auth.
+2. CRUD operations for products:
+   - Create new products with name, price, description, and image.
+   - View all products in a DataTable with pagination and search.
+   - Edit existing products.
+   - Delete products.
+   - View full product details, including creator’s name.
+3. Image upload and storage in `storage/app/public/products`.
+4. Bootstrap 5 responsive layout.
+5. Validation for form inputs including custom error messages.
+6. Optional slug support for nicer URLs.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Installation
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+1. Clone the repository:
 
-## Learning Laravel
+   git clone https://github.com/Dav-Olobo/CRUD-Products-.git
+   cd your-repo
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+2. Install dependencies:
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+   composer install
+   npm install
+   npm run dev
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+3. Copy `.env` file and generate an app key:
 
-## Laravel Sponsors
+   cp .env.example .env
+   php artisan key:generate
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+4. Configure your database in `.env`:
 
-### Premium Partners
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=product_crud
+   DB_USERNAME=root
+   DB_PASSWORD=
+5. Run migrations and seeders:
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+   php artisan migrate --seed
 
-## Contributing
+6. Link storage for public access to uploaded images:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+   php artisan storage:link
 
-## Code of Conduct
+7. Start the development server:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+   php artisan serve
 
-## Security Vulnerabilities
+- The app will be accessible at `http://127.0.0.1:8000`.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Usage
+
+1. Register a new user or login with an existing account.
+2. Go to the Dashboard to see all products.
+3. Create a new product by clicking "Add Product".
+4. Edit or delete existing products using the buttons in the list.
+5. View full product details by clicking the "View" button.
+
+## File Structure
+
+app/
+├─ Http/
+│  ├─ Controllers/
+│  │  └─ ProductController.php
+resources/
+├─ views/
+│  ├─ layout.blade.php
+│  └─ products/
+│     ├─ index.blade.php
+│     ├─ create.blade.php
+│     ├─ edit.blade.php
+│     ├─ show.blade.php
+│     └─ view.blade.php
+database/
+├─ migrations/
+├─ seeders/
+
+## Routes
+
+- Auth Resources route to handle products. User must be logged in to dashboard to create and manage routs
+Route::middleware(['auth'])->prefix('dashboard')->group(function ()
+   
+
+- Full product view route:
+
+   Route::get('products/view/{id}', [ProductController::class, 'view'])->name('products.view');
+
+## Validation Rules
+
+- `name`: required, string, max 255
+- `price`: required, numeric, min 0
+- `description`: required, string, max 1000
+- `image`: required for create, optional for update, must be jpeg, png, jpg, gif, webp, max 2MB
+
+## Dependencies
+
+- Laravel 10+
+- Bootstrap 5 (via CDN)
+- jQuery & DataTables (optional for table enhancements)
+
+## Notes
+
+- Make sure `storage/app/public` is linked to `public/storage` for image access.
+- The app currently does not restrict product edits/deletions by user, but this can be added via policies or middleware.
+- Slug functionality can be added for nicer URLs without affecting CRUD operations.
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is open-source and available under the MIT License.
+
