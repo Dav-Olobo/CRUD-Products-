@@ -62,7 +62,7 @@
     <!-- Footer -->
     <footer class="bg-light py-3 text-center mt-auto">
         <div class="container">
-            <small>© {{ date('Y') }} MyShop. All rights reserved.</small>
+            <small>© {{ date('Y') }} MyCRUD. All rights reserved.</small>
         </div>
     </footer>
 
