@@ -1,0 +1,38 @@
+# Laravel & PHP
+/vendor
+/node_modules
+/public/storage
+/storage/*.key
+/storage/pail
+/storage/logs
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/bootstrap/cache/*.php
+
+# Environment files
+.env
+.env.*
+.env.backup
+.env.production
+
+# Laravel specific
+/public/hot
+/public/build
+
+# IDE / Editor
+.idea
+.vscode
+.fleet
+.nova
+.zed
+.phpactor.json
+.phpunit.result.cache
+.phpunit.cache
+
+# OS generated
+.DS_Store
+Thumbs.db
+
+# Composer / Auth
+auth.json
