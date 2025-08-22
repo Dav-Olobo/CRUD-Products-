@@ -11,7 +11,7 @@ use App\Http\Controllers\ProductController;
 // });
 
 // Better to use a controller for the home route
-Route::get('/', [HomeController::class, 'index'])->name('welcome');
+Route::get('/', [HomeController::class, 'index'])->name('welcom');
 
 
 // Resource Auth Route - Must be logged in to create and manage products
