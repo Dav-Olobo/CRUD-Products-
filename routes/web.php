@@ -1,13 +1,18 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use GuzzleHttp\Promise\Create;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+// Better to use a controller for the home route
+Route::get('/', [HomeController::class, 'index'])->name('welcome');
+
 
 // Resource Auth Route - Must be logged in to create and manage products
 
