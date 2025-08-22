@@ -9,7 +9,7 @@
     <div class="row">
         @if($product->image)
         <div class="col-md-4">
-            <img src="{{ asset('storage/' . $product->image) }}" class="img-fluid rounded mb-3" alt="{{ $product->name }}">
+            <img src="{{ asset('storage/products/' . basename($product->image)) }}" class="img-fluid rounded mb-3" alt="{{ $product->name }}">
         </div>
         @endif
 

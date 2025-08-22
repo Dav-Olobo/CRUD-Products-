@@ -40,6 +40,11 @@
                             <a class="nav-link" href="{{ route('products.create') }}">Add Product</a>
                         </li>
                         <li class="nav-item">
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
                             <form action="{{ route('logout') }}" method="POST" class="d-inline">
                                 @csrf
                                 <button class="btn btn-link nav-link" type="submit">Logout</button>

@@ -41,8 +41,9 @@
                 <td>{{ Str::limit($product->description, 50) }}</td>
                 <td>
                     @if($product->image)
-                        <img src="{{asset('$product->imagePath') }}" alt="{{ $product->name }}" width="60">
-                    @else
+                <img src="{{ asset('storage/products/' . basename($product->image)) }}" width="200" 
+                class="img-fluid rounded mb-3" alt="{{ $product->name }}">                    
+                @else
                         N/A
                     @endif
                 </td>

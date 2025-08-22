@@ -31,7 +31,7 @@
             <label for="image" class="form-label">Product Image</label>
             <input type="file" name="image" class="form-control">
             @if($product->image)
-                <img src="{{ asset('storage/' . $product->image) }}" width="80" class="mt-2">
+             <img src="{{ asset($product->image) }}" width="80" class="mt-2">
             @endif
         </div>
 
