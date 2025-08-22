@@ -13,13 +13,17 @@ class ProductController extends Controller
      * Display a listing of the resource.
      */
     public function index()
+    {
+        $products = Product::latest()->get();
+        return view('products.index', compact('products'));
+    }
 
-        {
-            $products = Product::with('user')->latest()->get();
-
-            return view('products.index', compact('products'));
-
-        }
+    // Show one product
+    public function show($id)
+    {
+        $product = Product::findOrFail($id);
+        return view('products.view-products', compact('product'));
+    }
 
  
 
@@ -28,10 +32,10 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
         return view('products.create-product');
-        
     }
+        
+
 
     /**
      * Store a newly created resource in storage.
@@ -84,11 +88,11 @@ public function store(Request $request)
 
 // Display the specified resource.
 
-public function show(Product $product)
-{
-    $product = Product::with('user')->findOrFail($product->id);
-    return view('products.show', compact('product'));
-}
+// public function show(Product $product)
+// {
+//     $product = Product::with('user')->findOrFail($product->id);
+//     return view('products.show', compact('product'));
+// }
 
   
     public function edit(Product $product)
