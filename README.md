@@ -86,12 +86,12 @@ database/
 ## Routes
 
 - Auth Resources route to handle products. User must be logged in to dashboard to create and manage routs
-Route::middleware(['auth'])->prefix('dashboard')->group(function ()
-   
+Route::resource('dashboard/products', ProductController::class)
+    ->middleware('auth')
+    ->except(['index', 'show']);   
 
-- Full product view route:
-
-   Route::get('products/view/{id}', [ProductController::class, 'view'])->name('products.view');
+- Full product view and full product list is not fully authenticated to allow gues to use:
+ - Route::get('products/{product}', [ProductController::class, 'show'])->name('products.show');
 
 ## Validation Rules
 
@@ -106,13 +106,18 @@ Route::middleware(['auth'])->prefix('dashboard')->group(function ()
 - Bootstrap 5 (via CDN)
 - jQuery & DataTables (optional for table enhancements)
 
+## Change of Product View arrangement
+- Change from table view to E-commerce style 
+- card view.
+- Get product listing on the index page
+
 ## Notes
 
 - Make sure `storage/app/public` is linked to `public/storage` for image access.
 - The app currently does not restrict product edits/deletions by user, but this can be added via policies or middleware.
 - Slug functionality can be added for nicer URLs without affecting CRUD operations.
+- It can be transitioned into a full E-commerce site
 
 ## License
 
 This project is open-source and available under the MIT License.
-
