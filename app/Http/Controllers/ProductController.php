@@ -1,6 +1,7 @@
 <?php
-
 namespace App\Http\Controllers;
+
+use Illuminate\Support\Facades\Storage;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -105,14 +106,14 @@ public function show(Product $product)
 
 
     //Update the specified resource in storage.
-    
-    public function update(Request $request, Product $product)
+
+public function update(Request $request, Product $product)
 {
     // Validate input
     $validated = $request->validate([
         'name' => 'required|string|max:255',
         'price' => 'required|numeric|min:0',
-        'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
         'description' => 'required|string|max:1000',
     ], [
         'image.image' => 'The file must be an image.',
@@ -126,18 +127,23 @@ public function show(Product $product)
     $product->price = $validated['price'];
     $product->description = $validated['description'];
 
-    // Keep your current image processing
-    $imagePath = 'storage/' . $request->file('image')->store('products', 'public');
-    $product->image = $imagePath;
+    // Conditionally process the new image if one is provided
+    if ($request->hasFile('image')) {
+        // Delete the old image to prevent orphaned files
+        if ($product->image && Storage::disk('public')->exists(str_replace('storage/', '', $product->image))) {
+            Storage::disk('public')->delete(str_replace('storage/', '', $product->image));
+        }
+
+        // Store the new image and update the product's image path
+        $imagePath = 'storage/' . $request->file('image')->store('products', 'public');
+        $product->image = $imagePath;
+    }
 
     // Save updated product
     $product->save();
 
-    return redirect()->back()
-                     ->with('success', 'Product updated successfully!');
+    return redirect()->back()->with('success', 'Product updated successfully!');
 }
-
-
   
      // Remove the specified resource from storage.
     

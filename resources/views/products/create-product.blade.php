@@ -77,7 +77,7 @@
 
         <!-- Submit -->
         <button type="submit" class="btn btn-primary">Create Product</button>
-        <a href="{{ route('products.index') }}" class="btn btn-secondary">Cancel</a>
+        <a href="{{ route('dashboard') }}" class="btn btn-secondary">Cancel</a>
     </form>
 </div>
 @endsection
