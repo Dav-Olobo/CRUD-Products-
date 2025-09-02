@@ -18,6 +18,16 @@
         </div>
 
         <h2 class="mb-4 text-center">Featured Products</h2>
+        <div class="row justify-content-center mb-4">
+            <div class="col-md-8">
+                <form action="{{ route('products.index') }}" method="GET" class="d-flex">
+                    <input type="text" name="search" value="{{ request('search') }}" 
+                        class="form-control me-2" placeholder="Search products...">
+                    <button class="btn btn-primary" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
             @forelse($products as $product)
                 <div class="col">
@@ -48,6 +58,7 @@
                         </div>
                     </div>
                 </div>
+                 
             @empty
                 <div class="col-12 text-center">
                     <p class="lead">No products available yet. Check back soon!</p>
@@ -55,6 +66,7 @@
             @endforelse
         </div>
     </main>
+   {{ $products->links() }}
 @endsection
 
 @push('styles')
